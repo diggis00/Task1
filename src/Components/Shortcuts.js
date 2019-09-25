@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Avatar, Row, Col, Modal, Button, Input } from 'antd';
 import 'antd/dist/antd.css';
 import AddShortcuts from './AddShortcuts';
+
 export default class Shortcuts extends Component {
   constructor(props) {
     super(props);
@@ -16,29 +17,32 @@ export default class Shortcuts extends Component {
       ]
     };
   }
-  showModal = e => {
+
+  showModal = () => {
     this.setState({ visible: true });
   };
+
   handleOk = e => {
     e.preventDefault();
     this.setState({ visible: false });
     console.log(this.state.name);
     console.log(this.state.url);
     this.setState({
-      Shortcut: [...this.state.Shortcut, { name: 'de' }]
+      Shortcut: [...this.state.Shortcut, { name: e.target.value }]
     });
-    console.log(e.target.name.value);
     console.log(this.state.Shortcut.map(s => s.name));
   };
+
   handleCancel = () => {
     this.setState({ visible: false });
   };
+
   handleChange = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
+
   addShortcut = e => {
     e.preventDefault();
-
     // e.preventDefault();
     // let shortcut = this.state.Shortcut.concat(['asd']);
     this.setState({
@@ -46,6 +50,7 @@ export default class Shortcuts extends Component {
     });
     console.log('working');
   };
+
   render() {
     const { visible } = this.state;
     return (
@@ -58,7 +63,7 @@ export default class Shortcuts extends Component {
           }}
         >
           <Col
-            span={2}
+            span={6}
             style={{ display: 'flex', justifyContent: 'space-around' }}
           >
             {this.state.Shortcut.map(s => (
@@ -68,7 +73,6 @@ export default class Shortcuts extends Component {
               <Button onClick={this.showModal} shape="circle" size="large">
                 <Avatar icon="plus-circle" />
               </Button>
-
               <Modal
                 title="Add Shortcut"
                 visible={visible}
